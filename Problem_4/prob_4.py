@@ -13,7 +13,6 @@ import sys
 import matplotlib.pyplot as plt
 from pylab import *
 import numpy as np
-import pylab
 
 def main():
 	_file = []													# list with each row of the csv file
@@ -82,7 +81,7 @@ def main():
 				ha = 'center')
 
 	plt.figtext(center, height + ((1 - height)/(1.5/1.25)), 
-				"Goat Population", size='x-large', ha = 'center' )
+				"Goat Population in Six Continents", size='x-large', ha = 'center' )
 
 	plt.plot(years_Africa, population_Africa, label='Africa')
 	plt.plot(years_Asia, population_Asia, label='Asia')	
@@ -90,8 +89,7 @@ def main():
 	plt.plot(years_Europe, population_Europe, label='Europe')
 	plt.plot(years_NA, population_NA, label='NA')
 	plt.plot(years_SA, population_SA, label='SA')
-	#plt.ylim([0,10**9])
-	#plt.yticks(np.arange(0, 10**9, 10**3))
+	plt.ylim([10**0,10**9])
 	plt.yscale('log')
 	plt.xlabel("Years")
 	plt.ylabel("Value")

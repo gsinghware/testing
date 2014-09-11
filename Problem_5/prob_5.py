@@ -57,15 +57,16 @@ def animal_To_Continents(animal):
 def plot(data, title, fig, a):
 	fig.add_subplot(2, 3, a)
 	N = 7
-	width = 0.2
+	width = 0.5
 	x = tuple(data)
 	ind = np.arange(N)
 	plt.yscale('log')
 	colors = ['red','yellow','blue','green','magenta','cyan', 'black']
 	p1 = plt.bar(ind, x, width, color=colors)
-	#plt.ylim([0,6*10**8])
+	plt.ylim([10**0,10**10])
 	plt.ylabel('Total Population')
-	plt.xticks(ind, ('Chicken', 'Cattle', 'Ducks', 'Goats', 'Pigs', 'Sheeps', 'Turkeys'))
+	plt.xlabel('Animals')
+	plt.xticks(ind, ('chicken', 'cattle', 'duck', 'goat', 'pig', 'sheep', 'turkey'))
 	plt.title(title)
 
 def main():
@@ -88,29 +89,31 @@ def main():
 	
 	fig = plt.figure(1, facecolor='w', figsize=(6*3.13,3*3.13))
 
-	left = .1
-	width = 1 - left * 2
-	bottom = .2
-	height = 1 - bottom * 1.5
-	center = 1 - .5	
+	left 	= .1
+	width 	= 1 - left * 2
+	bottom 	= .2
+	height 	= 1 - bottom * 1.5
+	center 	= 1 - .5	
 
 	plt.figtext(center, height + ((1 - height)/(1.5/1.25)), 
-		"Population of Animals in Six Continents", size='x-large', ha = 'center' )
+		"Population of Animals in Six Continents in 2007", size='x-large', ha = 'center' )
 	
 	plt.figtext(center, bottom/20, 
 			"Source: FAO Data | Food and Agriculture Organization", 
 			ha = 'center')
 	
-	plot(Africa, 'Africa', fig, 1)
-	plot(Asia, 'Asia', fig, 2)
-	plot(AusNZ, 'Australia and New Zealand', fig, 3)
-	plot(Europe, 'Europe', fig, 4)
-	plot(NA, 'North America', fig, 5)
-	plot(SA, 'South America', fig, 6)
+	plot(Africa,'Africa', 		 fig, 1)
+	plot(Asia, 	'Asia', 		 fig, 2)
+	plot(AusNZ, 'Aus and NZ', 	 fig, 3)
+	plot(Europe,'Europe', 		 fig, 4)
+	plot(NA, 	'North America', fig, 5)
+	plot(SA, 	'South America', fig, 6)
 	
 	plt.show()
 
 	a = zip(Africa, Asia, AusNZ, Europe, NA, SA)
+	a = sorted(a, key=lambda tup: tup[0]) 		# sort data by continent of the population of animals
+	a = sorted(a, key=lambda tup: tup[5])
 	
 	N = 6
 	ind = np.arange(N)    	# the x locations for the groups
@@ -121,7 +124,7 @@ def main():
 	fig.add_axes((left, bottom, width, height))   # [left, bottom, width, height] 
 
 	plt.figtext(center, height + ((1 - height)/(1.5/1.25)), 
-			"Population of Animals in Six Continents", size='x-large', ha = 'center' )
+			"Population of Animals in Six Continents in 2007", size='x-large', ha = 'center' )
 	
 	plt.figtext(center, bottom/20, 
 				"Source: FAO Data | Food and Agriculture Organization", 
@@ -136,12 +139,47 @@ def main():
 	p5 = plt.bar(ind, a[4], width, color='magenta', bottom=sumzip(a[3], a[2], a[1], a[0]) )
 	p6 = plt.bar(ind, a[5], width, color='cyan', 	bottom=sumzip(a[4], a[3], a[2], a[1], a[0]) )
 	p7 = plt.bar(ind, a[6], width, color='black', 	bottom=sumzip(a[5], a[4], a[3], a[2], a[1], a[0]) )
-
-	plt.xlabel("Continents")
+	
 	plt.ylabel("Population")
+	plt.xlabel("Continents")
+	plt.ylim([10**0,10**10])
 	plt.xticks(ind+width/2, ('Africa', 'Asia', 'AusNZ', 'Europe', 'NA', 'SA') )
 	plt.legend( (p1[0], p2[0], p3[0], p4[0], p5[0], p6[0], p7[0]), ('chicken', 'cattle', 'duck', 'goat', 'pig', 'sheep', 'turkey'))
 	plt.show()
+
+	N = 6
+	ind = np.arange(N)  # the x locations for the groups
+	width = 0.1       # the width of the bars
+
+	fig, ax = plt.subplots()
+	
+	plt.figtext(center, height + ((1 - height)/(1.5/1.25)), 
+		"Population of Animals in Six Continents in 2007", size='x-large', ha = 'center' )
+
+	plt.figtext(center, bottom/20, 
+			"Source: FAO Data | Food and Agriculture Organization", 
+			ha = 'center')
+
+	plt.yscale('log')
+	
+	rects1 = ax.bar(ind, a[0], width, color='red')
+	rects2 = ax.bar(ind+width, a[1], width, color='yellow')
+	rects3 = ax.bar(ind+2*width, a[2], width, color='blue')
+	rects4 = ax.bar(ind+3*width, a[3], width, color='green')
+	rects5 = ax.bar(ind+4*width, a[4], width, color='magenta')
+	rects6 = ax.bar(ind+5*width, a[5], width, color='cyan')
+	rects7 = ax.bar(ind+6*width, a[6], width, color='black')
+
+	# add some text for labels, title and axes ticks
+	ax.set_ylabel('Population')
+	ax.set_xlabel('Continents')
+	plt.ylim([10**0,10**10])
+	ax.set_xticks(ind+width)
+	ax.set_xticklabels( ('Africa', 'Asia', 'AusNZ', 'Europe', 'NA', 'SA' ) )
+	ax.legend( (rects1[0], rects2[0], rects3[0], rects4[0], rects5[0], rects6[0], rects7[0]), ('chicken', 'cattle', 'duck', 'goat', 'pig', 'sheep', 'turkey'), ncol=7 )
+	plt.show()
+
+
 	
 
 if __name__ == '__main__':
