@@ -86,7 +86,7 @@ def main():
 	animal_To_Continents(sheep)
 	animal_To_Continents(turkey)
 	
-	fig = plt.figure(1, facecolor='w')
+	fig = plt.figure(1, facecolor='w', figsize=(6*3.13,3*3.13))
 
 	left = .1
 	width = 1 - left * 2
@@ -95,7 +95,7 @@ def main():
 	center = 1 - .5	
 
 	plt.figtext(center, height + ((1 - height)/(1.5/1.25)), 
-		"Population of Animals in Six Continent", size='x-large', ha = 'center' )
+		"Population of Animals in Six Continents", size='x-large', ha = 'center' )
 	
 	plt.figtext(center, bottom/20, 
 			"Source: FAO Data | Food and Agriculture Organization", 
@@ -112,19 +112,16 @@ def main():
 
 	a = zip(Africa, Asia, AusNZ, Europe, NA, SA)
 	
-	for i in a:
-		print i
-
 	N = 6
 	ind = np.arange(N)    	# the x locations for the groups
 	width = 0.5       		# the width of the bars: can also be len(x) sequence
 
-	plt.figure(2, facecolor='w')
+	plt.figure(2, facecolor='w', figsize=(6*3.13,3*3.13))
 	
 	fig.add_axes((left, bottom, width, height))   # [left, bottom, width, height] 
 
 	plt.figtext(center, height + ((1 - height)/(1.5/1.25)), 
-			"Population of Animals in Six Continent", size='x-large', ha = 'center' )
+			"Population of Animals in Six Continents", size='x-large', ha = 'center' )
 	
 	plt.figtext(center, bottom/20, 
 				"Source: FAO Data | Food and Agriculture Organization", 
@@ -140,16 +137,10 @@ def main():
 	p6 = plt.bar(ind, a[5], width, color='cyan', 	bottom=sumzip(a[4], a[3], a[2], a[1], a[0]) )
 	p7 = plt.bar(ind, a[6], width, color='black', 	bottom=sumzip(a[5], a[4], a[3], a[2], a[1], a[0]) )
 
-	plt.xlabel("Continent")
+	plt.xlabel("Continents")
 	plt.ylabel("Population")
 	plt.xticks(ind+width/2, ('Africa', 'Asia', 'AusNZ', 'Europe', 'NA', 'SA') )
-	
-	#plt.ylim([0,1.2*10**9])
-	#plt.yticks(np.arange(0,10**9,10**3))
-	
 	plt.legend( (p1[0], p2[0], p3[0], p4[0], p5[0], p6[0], p7[0]), ('chicken', 'cattle', 'duck', 'goat', 'pig', 'sheep', 'turkey'))
-	#plt.legend( (p1[0], p2[0], p3[0]), ('chicken', 'cattle', 'duck'))
-	
 	plt.show()
 	
 
