@@ -196,7 +196,7 @@ def main():
 	plt.ylim([10**0,10**10])
 	ax.set_xticks(ind+width)
 	ax.set_xticklabels( ('Africa', 'Asia', 'AusNZ', 'Europe', 'NA', 'SA' ) )
-	ax.legend( tuple(leg), tuple(anm), ncol=7 )
+	ax.legend( (rects1[0], rects2[0], rects3[0], rects4[0], rects5[0], rects6[0], rects7[0]), tuple(anm), ncol=7 )
 	plt.show()
 	
 
