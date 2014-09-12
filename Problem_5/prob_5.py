@@ -112,11 +112,30 @@ def main():
 	
 	plt.show()
 
-	a = zip(Africa, Asia, AusNZ, Europe, NA, SA)	
+	a = zip(Africa, Asia, AusNZ, Europe, NA, SA)
+	col = ['red','yellow','blue','green','magenta','cyan', 'black']
+	anml = ['chicken', 'cattle', 'duck', 'goat', 'pig', 'sheep', 'turkey']
 
-	a = sorted(a, key=lambda tup: tup[0]) 		# sort data by continent of the population of animals
-	a = sorted(a, key=lambda tup: tup[5])
+	animals_by_continent = []
+	for i in a:
+		animals_by_continent.append(i)
 
+	name_anm = zip(animals_by_continent, col, anml)
+
+	x = sorted(name_anm, key=lambda tup: tup[0]) 		# sort data by continent of the population of animals
+	x.sort(key=lambda tup: tup[0][5])
+	
+	clrs = []
+	anm = []
+	a = []
+	for i in x:
+		for j in i:
+			if j in col:
+				clrs.append(j)
+			elif j in anml:
+				anm.append(j)
+			else:
+				a.append(j)	
 
 	N = 6
 	ind = np.arange(N)    	# the x locations for the groups
@@ -124,7 +143,7 @@ def main():
 
 	plt.figure(2, facecolor='w', figsize=(6*3.13,3*3.13))
 	
-	fig.add_axes((left, bottom, width, height))   # [left, bottom, width, height] 
+	fig.add_axes((left, bottom, width, height))   		# [left, bottom, width, height] 
 
 	plt.figtext(center, height + ((1 - height)/(1.5/1.25)), 
 			"Population of Animals in Six Continents in 2007", size='x-large', ha = 'center' )
@@ -135,38 +154,20 @@ def main():
 
 	plt.yscale('log')
 
-	anm = ['chicken', 'cattle', 'duck', 'goat', 'pig', 'sheep', 'turkey']
-	anm = ('duck', 'turkey', 'chicken', 'goat', 'pig', 'sheep', 'cattle')
-
-	p1 = plt.bar(ind, a[0], width, color='blue')
-	p2 = plt.bar(ind, a[1], width, color='black', 	bottom=sumzip(a[0]) )
-	p3 = plt.bar(ind, a[2], width, color='red', 	bottom=sumzip(a[1], a[0]) )
-	p4 = plt.bar(ind, a[3], width, color='green', 	bottom=sumzip(a[2], a[1], a[0]) )
-	p5 = plt.bar(ind, a[4], width, color='magenta', bottom=sumzip(a[3], a[2], a[1], a[0]) )
-	p6 = plt.bar(ind, a[5], width, color='cyan', 	bottom=sumzip(a[4], a[3], a[2], a[1], a[0]) )
-	p7 = plt.bar(ind, a[6], width, color='yellow', 	bottom=sumzip(a[5], a[4], a[3], a[2], a[1], a[0]) )
-
-	"""
-	p1 = plt.bar(ind, a[0], width, color='red')
-	p2 = plt.bar(ind, a[1], width, color='yellow', 	bottom=sumzip(a[0]) )
-	p3 = plt.bar(ind, a[2], width, color='blue', 	bottom=sumzip(a[1], a[0]) )
-	p4 = plt.bar(ind, a[3], width, color='green', 	bottom=sumzip(a[2], a[1], a[0]) )
-	p5 = plt.bar(ind, a[4], width, color='magenta', bottom=sumzip(a[3], a[2], a[1], a[0]) )
-	p6 = plt.bar(ind, a[5], width, color='cyan', 	bottom=sumzip(a[4], a[3], a[2], a[1], a[0]) )
-	p7 = plt.bar(ind, a[6], width, color='black', 	bottom=sumzip(a[5], a[4], a[3], a[2], a[1], a[0]) )
-	"""
+	p1 = plt.bar(ind, a[0], width, color=clrs[0])
+	p2 = plt.bar(ind, a[1], width, color=clrs[1], 	bottom=sumzip(a[0]) )
+	p3 = plt.bar(ind, a[2], width, color=clrs[2], 	bottom=sumzip(a[1], a[0]) )
+	p4 = plt.bar(ind, a[3], width, color=clrs[3], 	bottom=sumzip(a[2], a[1], a[0]) )
+	p5 = plt.bar(ind, a[4], width, color=clrs[4], 	bottom=sumzip(a[3], a[2], a[1], a[0]) )
+	p6 = plt.bar(ind, a[5], width, color=clrs[5], 	bottom=sumzip(a[4], a[3], a[2], a[1], a[0]) )
+	p7 = plt.bar(ind, a[6], width, color=clrs[6], 	bottom=sumzip(a[5], a[4], a[3], a[2], a[1], a[0]) )
 
 	plt.ylabel("Population")
 	plt.xlabel("Continents")
 	plt.ylim([10**0,10**10])
 	plt.xticks(ind+width/2, ('Africa', 'Asia', 'AusNZ', 'Europe', 'NA', 'SA') )
 	plt.legend( (p1[0], p2[0], p3[0], p4[0], p5[0], p6[0], p7[0]), anm)
-	plt.legend(loc="upper left", bbox_to_anchor=(1,1))
 	plt.show()
-
-	N = 6
-	ind = np.arange(N)  	# the x locations for the groups
-	width = 0.1       		# the width of the bars
 
 	fig, ax = plt.subplots(facecolor='w', figsize=(6*3.13,3*3.13))
 	
@@ -177,23 +178,25 @@ def main():
 			"Source: FAO Data | Food and Agriculture Organization", 
 			ha = 'center')
 
+	N = 6
+	ind = np.arange(N)  	# the x locations for the groups
+	width = 0.1       		# the width of the bars
 	plt.yscale('log')
-	
-	rects1 = ax.bar(ind, a[0], width, color='blue')
-	rects2 = ax.bar(ind+width, a[1], width, color='black')
-	rects3 = ax.bar(ind+2*width, a[2], width, color='red')
-	rects4 = ax.bar(ind+3*width, a[3], width, color='green')
-	rects5 = ax.bar(ind+4*width, a[4], width, color='magenta')
-	rects6 = ax.bar(ind+5*width, a[5], width, color='cyan')
-	rects7 = ax.bar(ind+6*width, a[6], width, color='yellow')
 
-	# add some text for labels, title and axes ticks
+	rects1 = ax.bar(ind, 		 a[0], width, color=clrs[0])
+	rects2 = ax.bar(ind+width,   a[1], width, color=clrs[1])
+	rects3 = ax.bar(ind+2*width, a[2], width, color=clrs[2])
+	rects4 = ax.bar(ind+3*width, a[3], width, color=clrs[3])
+	rects5 = ax.bar(ind+4*width, a[4], width, color=clrs[4])
+	rects6 = ax.bar(ind+5*width, a[5], width, color=clrs[5])
+	rects7 = ax.bar(ind+6*width, a[6], width, color=clrs[6])
+
 	ax.set_ylabel('Population')
 	ax.set_xlabel('Continents')
 	plt.ylim([10**0,10**10])
 	ax.set_xticks(ind+width)
 	ax.set_xticklabels( ('Africa', 'Asia', 'AusNZ', 'Europe', 'NA', 'SA' ) )
-	ax.legend( (rects1[0], rects2[0], rects3[0], rects4[0], rects5[0], rects6[0], rects7[0]), anm, ncol=7 )
+	ax.legend( tuple(leg), tuple(anm), ncol=7 )
 	plt.show()
 	
 
